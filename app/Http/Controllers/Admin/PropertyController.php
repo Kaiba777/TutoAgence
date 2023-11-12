@@ -26,7 +26,7 @@ class PropertyController extends Controller
     {
         $property = new Property();
 
-        // rempli ces données dans notre formulaire
+        // préremplir ces données dans notre formulaire
         $property->fill([
             'surface' => 40,
             'rooms' => 3,
@@ -53,24 +53,28 @@ class PropertyController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Property $property)
     {
-        //
+        return view('admin.properties.form', [
+            'property' => $property
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(PropertyFormRequest $request, Property $property)
     {
-        //
+        $property->update($request->validated());
+        return to_route('admin.property.index')->with('success', 'Le bien a été bien modifié');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Property $property)
     {
-        //
+        $property->delete();
+        return to_route('admin.property.index')->with('success', 'Le bien a été bien supprimé');
     }
 }
