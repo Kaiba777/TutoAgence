@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@yield('title') | Administration</title>
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/tom-select/css/tom-select.bootstrap4.css') }}">
 </head>
 <body>
 
@@ -36,26 +37,16 @@
 
     <div class="container mt-5">
         
-        @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-        @endif
-
-        {{-- Affiche les erreurs --}}
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul class="my-0">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+        @include('shared.flash')
 
         @yield('content')
     </div>
     
     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/tom-select/js/tom-select.complete.min.js') }}"></script>
+
+    <script>
+        new TomSelect('select[multiple]', {plugins: {remove_button: {title: 'Supprimer'}}})
+    </script>
 </body>
 </html>
